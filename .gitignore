@@ -1,0 +1,13 @@
+out/
+out-*/
+
+# Not published: game files and anything extracted or converted from them,
+# build output, caches from a device, upstream checkouts, release zips
+/upstream/
+/build/
+/build-*/
+/gamedata/
+/game/
+/release/
+__pycache__/
+.DS_Store
