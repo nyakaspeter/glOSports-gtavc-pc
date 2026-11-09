@@ -1,4 +1,4 @@
-# glOSports-revc — GTA Vice City (reVC) on the GA36-MB
+# glOSports-gtavc-pc — GTA Vice City (reVC) on the GA36-MB
 
 GTA Vice City running natively through the [re3](https://github.com/Cai1Hsu/re3)
 reverse-engineered engine (fork `Cai1Hsu/re3`, branch `miami` at `e19f406` (reVC), with `main`'s librw, so every patch of the GTA III port applies), built for
@@ -36,7 +36,7 @@ stick is the PS2's first-person look. Targets: hold R1 to lock on, L2 / R2
 
 ## Game files
 
-From the PC game's folder, copied whole into `/home/player/ports/revc/`:
+From the PC game's folder, copied whole into `/home/player/ports/gtavc-pc/`:
 
 | Folder | Needed |
 |---|---|
@@ -49,7 +49,7 @@ From the PC game's folder, copied whole into `/home/player/ports/revc/`:
 | `TEXT/` | no: the port ships its own `TEXT/` |
 | `movies/`, `mss/`, `gta-vc.exe`, the `.dll`s | no (the game runs without them) |
 
-## The game folder on the console (`/home/player/ports/revc/`)
+## The game folder on the console (`/home/player/ports/gtavc-pc/`)
 
 | | |
 |---|---|
@@ -58,7 +58,7 @@ From the PC game's folder, copied whole into `/home/player/ports/revc/`:
 | `alsoft.conf` | OpenAL reads it from the game folder by itself |
 | `glos/` | the ARM driver set from `goodluckOS-mali-driver` |
 | `start.sh` | controller mapping and tuning, then `exec ./glos/glos-gpu run mali ./reVC` |
-| `icon.png`, `~/.local/share/applications/revc.puppy` | the launcher entry |
+| `icon.png`, `~/.local/share/applications/gtavc-pc.puppy` | the launcher entry |
 | `models/txd.img` + `txd.dir` | the texture cache the game builds on its first start ("converting textures"); delete both to rebuild it |
 | `userfiles/` | saves (never touched by tooling); the rest is your game data (above) |
 
@@ -67,11 +67,11 @@ From the PC game's folder, copied whole into `/home/player/ports/revc/`:
 ```sh
 docker buildx build --output type=local,dest=./out . && ./package.sh
 ```
-`out/ports/revc/` is then the complete folder (the game data excluded):
-copy it over the console's, and `out/.local/share/applications/revc.puppy` next
+`out/ports/gtavc-pc/` is then the complete folder (the game data excluded):
+copy it over the console's, and `out/.local/share/applications/gtavc-pc.puppy` next
 to the other launcher entries. To update only the binary:
-`python3 ../goodluckOS-tools/mtp_send.py / out/ports/revc/reVC`, then over the console
-`appctl kill-application; mv /home/player/reVC /home/player/ports/revc/reVC`.
+`python3 ../goodluckOS-tools/mtp_send.py / out/ports/gtavc-pc/reVC`, then over the console
+`appctl kill-application; mv /home/player/reVC /home/player/ports/gtavc-pc/reVC`.
 
 The default build is LTO + profile-guided (profile in `pgo/`) with
 `-fno-strict-aliasing` (without it the optimiser exposed type-punning in the
@@ -81,13 +81,13 @@ Plain build: `--build-arg LTO=0 --build-arg PGO=off`.
 
 | Path | What |
 |---|---|
-| `Dockerfile` | clones the fork, applies `patch-re3.sh` and `shim/`, cross-compiles, zips `ports/revc/` |
+| `Dockerfile` | clones the fork, applies `patch-re3.sh` and `shim/`, cross-compiles, zips `ports/gtavc-pc/` |
 | `patch-re3.sh` | every change to the engine and librw, as text substitutions applied at build time |
 | `shim/` | `glfw_sdl2_shim.cpp` (the GLFW subset re3 uses, on SDL2: the fork only has a GLFW front end and GLFW can't do KMS/DRM), `gl3fbdev.cpp` (EGL on `/dev/fb0` through ARM's libraries, opened by name), `gl3thread.cpp` (the GL command thread), `glos_fps.cpp`, `glos_prof.cpp`, `glos_scale.cpp` |
-| `start.sh`, `revc.puppy`, `icon.png`, `alsoft.conf` | as shipped |
+| `start.sh`, `gtavc-pc.puppy`, `icon.png`, `alsoft.conf` | as shipped |
 | `pgo/` | the training profile |
 | `tools/` | `bench.sh` (relaunch with FPS logging, measure), `profile.sh` (sampling profiler, hottest functions per library), `pgo.sh`, the GL-thread generator |
-| `glos/testing/` | console-side tools, copied over only when needed (`../goodluckOS-tools/testing-sync.sh revc`) |
+| `glos/testing/` | console-side tools, copied over only when needed (`../goodluckOS-tools/testing-sync.sh gtavc-pc`) |
 
 ## Tuning (`start.sh`; everything is off in the binary itself)
 

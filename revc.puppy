@@ -1,6 +1,0 @@
-[Entry]
-CATEGORY=Games
-NAME=Grand Theft Auto: Vice City
-DESCRIPTION=Running natively via reVC
-COMMAND=/home/player/ports/revc/start.sh
-ICON=/home/player/ports/revc/icon.png

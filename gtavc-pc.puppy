@@ -1,0 +1,6 @@
+[Entry]
+CATEGORY=Games
+NAME=Grand Theft Auto: Vice City (PC)
+DESCRIPTION=Running natively via reVC
+COMMAND=/home/player/ports/gtavc-pc/start.sh
+ICON=/home/player/ports/gtavc-pc/icon.png

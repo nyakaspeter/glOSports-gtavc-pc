@@ -11,7 +11,7 @@ console() { (cd "$ROOT" && GLOS_TIMEOUT=${T:-60} python3 -I console.py "$1"); }
 
 case "${1:-}" in
 start)
-    console '/usr/local/bin/appctl kill-application; sleep 3; /usr/local/bin/appctl launch-application "env REVC_FPS_COUNTER=1 REVC_FPS_LOG=1 /home/player/ports/revc/start.sh"; sleep 5; pidof reVC'
+    console '/usr/local/bin/appctl kill-application; sleep 3; /usr/local/bin/appctl launch-application "env REVC_FPS_COUNTER=1 REVC_FPS_LOG=1 /home/player/ports/gtavc-pc/start.sh"; sleep 5; pidof reVC'
     ;;
 measure)
     secs=${2:-20}

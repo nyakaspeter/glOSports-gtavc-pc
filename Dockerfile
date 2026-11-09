@@ -83,9 +83,9 @@ RUN set -e; flags="$EXTRA_CFLAGS"; \
 
 # Package: binary, the port's own data overrides, launcher and the audio libs
 # goodluckOS lacks (in lib/, which the binary finds through an $ORIGIN rpath).
-COPY start.sh alsoft.conf revc.puppy icon.png /build/pkg/
+COPY start.sh alsoft.conf gtavc-pc.puppy icon.png /build/pkg/
 RUN set -e; \
-    if [ "$GAME" = vc ]; then dir=revc bin=reVC name="Vice City"; else dir=re3 bin=re3 name="GTA III"; fi; \
+    if [ "$GAME" = vc ]; then dir=gtavc-pc bin=reVC name="Vice City"; else dir=gta3-pc bin=re3 name="GTA III"; fi; \
     out=/output/ports/$dir; mkdir -p $out/lib /output/.local/share/applications; \
     cp build/src/$bin $out/; \
     apt-get update -qq && apt-get install -y -qq --no-install-recommends patchelf >/dev/null; \

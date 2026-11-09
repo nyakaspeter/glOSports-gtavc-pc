@@ -10,7 +10,7 @@
 set -eu
 HERE=$(cd "$(dirname "$0")/.." && pwd)
 ROOT=$(cd "$HERE/../goodluckOS-tools" && pwd)
-dir=revc bin=reVC out=out-pgogen prof=pgo
+dir=gtavc-pc bin=reVC out=out-pgogen prof=pgo
 console() { (cd "$ROOT" && GLOS_TIMEOUT=${T:-60} python3 -I console.py "$1"); }
 
 case "${1:-}" in
