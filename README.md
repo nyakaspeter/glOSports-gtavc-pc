@@ -156,3 +156,8 @@ line shows it as `flip`. Carried over from glOSports-maxpayne.
 Vsync and the Frame Limiter off and a save loaded, `tools/bench.sh measure`
 (20 s). Standing still the scene is partly GPU-bound (~41 fps), so also
 compare the "main thread busy" figure, which tracks CPU cost per frame.
+
+## Licence
+
+The port's own code is MIT (`LICENSE`); `package.sh` puts a copy into the game folder's
+`licenses/`. Third-party components and their licences: `licenses/README.md`.
