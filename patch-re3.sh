@@ -44,6 +44,12 @@ sed -i 's/^\tBlurOn = true;$/\tBlurOn = false;/' src/render/MBlur.cpp
 grep -qP '^\tBlurOn = false;$' src/render/MBlur.cpp
 sed -i 's/^\tCMBlur::BlurOn = true;$/\tCMBlur::BlurOn = false;/' src/core/Frontend.cpp
 grep -qP '^\tCMBlur::BlurOn = false;$' src/core/Frontend.cpp
+# Without a gta3.set (a fresh install), GTA III's LoadSettings turns Trails on
+# (PC 1.1 behaviour). Its frame copy doesn't get the frame on this driver: the
+# whole screen showed stale texture memory blended over it. Off by default;
+# Vice City's LoadSettings already starts with it off.
+sed -i 's/^\tCMBlur::BlurOn = (_dwOperatingSystemVersion != OS_WIN98);$/\tCMBlur::BlurOn = false;/' src/core/Frontend.cpp
+! grep -q 'CMBlur::BlurOn = (_dwOperatingSystemVersion != OS_WIN98);' src/core/Frontend.cpp
 # 64 bone mat4s (256 vectors) overflow Mali-400's vertex uniforms, but Vice
 # City's cutscene characters use up to 64 bones (face rigs). Send each bone
 # as 3 rows instead (the 4th is always 0 0 0 1): 192 vectors, and only as
@@ -283,15 +289,3 @@ grep -q 'defined RW_GL3$' src/skel/glfw/glfw.cpp
 grep -q '__SWITCH__ && !defined LIBRW_SDL2' src/skel/glfw/glfw.cpp
 ! grep -q 'SDL_GL_CONTEXT_PROFILE_CORE, ' vendor/librw/src/gl/gl3device.cpp
 echo "re3 patched"
-
-# Control method "Classic" by default (the PS2 layout: the stick turns the
-# player; "Standard" is the keyboard+mouse layout, where left/right strafe).
-# A saved Method in re3.ini / reVC.ini still wins.
-perl -0pi -e 's/\nint32 CMenuManager::m_ControlMethod;/\nint32 CMenuManager::m_ControlMethod = CONTROL_CLASSIC;/' src/core/Frontend.cpp
-grep -q 'm_ControlMethod = CONTROL_CLASSIC;' src/core/Frontend.cpp
-
-# Free Camera on by default: the right stick orbits the camera on foot and
-# gives the follow camera in vehicles (off, the PS2 behaviour: first-person
-# look). A saved FreeCam in the ini still wins.
-perl -0pi -e 's/\nbool CCamera::bFreeCam = false;/\nbool CCamera::bFreeCam = true;/' src/core/Cam.cpp
-grep -q 'bFreeCam = true;' src/core/Cam.cpp

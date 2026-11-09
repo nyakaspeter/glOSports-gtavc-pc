@@ -24,15 +24,16 @@ Recommended in-game settings: **Vsync on, Frame Limiter on** (steady 30, dips
 to 20 in the heaviest spots), Trails off, Draw Distance to taste. Radio: **L1**
 in a car (controller "Setup 1").
 
-Controls: the build defaults to the **Classic** control method (the PS2 layout:
-the stick turns the player). "Standard" is the keyboard-and-mouse layout, in
-which left and right make the player strafe sideways; it is what the engine
-chooses on its own, and a `Method = 0` saved in the ini brings it back
-(Controller Setup in the menu, or `Method = 1`).
-**Free Camera** is on by default too (Display Setup): the right stick orbits
-the camera on foot and follows the car San Andreas-style; off, the right
-stick is the PS2's first-person look. Targets: hold R1 to lock on, L2 / R2
-(the lower shoulder buttons) cycle them.
+Controls: the patches leave every in-game default as the engine has it,
+except Trails (off). So the Control Method starts as **Standard**, the PC
+layout (left and right make the player strafe sideways), and Free Camera
+starts off. R1 is Target in both methods (`PED_LOCK_TARGET = joy:8`, the right
+bumper), but lock-on only exists in **Classic**, the PS2 layout (the stick
+turns the player): `FindWeaponLockOnTarget` runs only while the mouse camera
+is off, and Standard turns it on. In Classic, while locked on, L2 / R2 (the
+lower shoulder buttons) cycle targets. Classic: Controller Setup → Control
+Method (`Method = 1` in the ini). **Free Camera** (Display Setup) makes the
+right stick orbit the camera on foot and follow the car San Andreas-style.
 
 ## Game files
 
